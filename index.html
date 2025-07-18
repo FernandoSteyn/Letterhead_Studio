@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<!--
+  General Material Ckraftmanship Premium Letterhead Package
+  Created by Fernando Steyn
+  Completely offline accessible and independent
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Letterhead Templates - Professional Business Package</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- Offline-compatible fonts with web-safe fallbacks -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            perspective: 1000px;
+        }
+
+        .main-title {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            transform: rotateX(15deg);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: rotateX(15deg) translateY(0); }
+            50% { transform: rotateX(15deg) translateY(-10px); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-reg {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transform: rotateY(25deg);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .card-description {
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .special-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .bbee-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(15deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="left: 40%; animation-delay: 6s;"></div>
+        <div class="floating-element" style="left: 50%; animation-delay: 8s;"></div>
+        <div class="floating-element" style="left: 60%; animation-delay: 10s;"></div>
+        <div class="floating-element" style="left: 70%; animation-delay: 12s;"></div>
+        <div class="floating-element" style="left: 80%; animation-delay: 14s;"></div>
+        <div class="floating-element" style="left: 90%; animation-delay: 16s;"></div>
+    </div>
+
+    <div class="bbee-badge">
+        B-BBEE Level 1 Contributor
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">PREMIUM LETTERHEAD TEMPLATES</h1>
+            <p class="subtitle">Professional Business Templates Package</p>
+            <p class="company-reg">Ready to Customize with Your Company Details</p>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 30px auto; max-width: 600px; backdrop-filter: blur(10px);">
+                <h3 style="margin-bottom: 15px; color: #f9ca24;">📦 Using This Package Offline</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px;">
+                    ✓ Extract ZIP file to your laptop<br>
+                    ✓ Double-click index.html to start<br>
+                    ✓ No internet needed after download<br>
+                    ✓ Works on Windows, Mac, and Linux
+                </p>
+                <p style="font-size: 0.85rem; opacity: 0.8;">Created by Fernando Steyn • Completely offline accessible</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #3498db, #2980b9);">📄</div>
+                    <h3 class="card-title">Classic Corporate</h3>
+                </div>
+                <p class="card-description">Professional floating header design with traditional elegance and subtle 3D depth effects. Perfect for formal business correspondence.</p>
+                <a href="letterhead-generator.html?template=classic" class="btn">Edit Template</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">✨</div>
+                    <h3 class="card-title">Modern Minimalist</h3>
+                </div>
+                <p class="card-description">Clean side panel layout with contemporary 3D elements. Emphasizes clarity and modern business aesthetics.</p>
+                <a href="letterhead-generator.html?template=minimalist" class="btn">Edit Template</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">🏗️</div>
+                    <h3 class="card-title">Bold Construction</h3>
+                </div>
+                <p class="card-description">Industry-specific design with geometric 3D elements and construction-themed color palette. Shows strength and reliability.</p>
+                <a href="letterhead-generator.html?template=bold" class="btn">Edit Template</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">💎</div>
+                    <h3 class="card-title">Elegant Professional</h3>
+                </div>
+                <p class="card-description">Sophisticated embossed effects with luxury styling. Creates premium impression for high-value client communications.</p>
+                <a href="letterhead-generator.html?template=elegant" class="btn">Edit Template</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #1abc9c, #16a085);">🎨</div>
+                    <h3 class="card-title">Contemporary Asymmetric</h3>
+                </div>
+                <p class="card-description">Dynamic asymmetric 3D layout with modern visual flow. Perfect for creative and forward-thinking business communications.</p>
+                <a href="letterhead-generator.html?template=contemporary" class="btn">Edit Template</a>
+            </div>
+
+            <div class="card special-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 2px solid #f39c12;">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">🤖</div>
+                    <h3 class="card-title">AI Letterhead Generator</h3>
+                </div>
+                <p class="card-description">Start with a blank template and use AI to write professional letters. Includes all templates, AI assistant, digital signatures, and custom logo upload.</p>
+                <a href="letterhead-generator.html" class="btn" style="background: linear-gradient(45deg, #f39c12, #e67e22);">Start Creating</a>
+            </div>
+
+            <div class="card special-card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #34495e, #2c3e50);">🏢</div>
+                    <h3 class="card-title">Complete Company Profile</h3>
+                </div>
+                <p class="card-description">Comprehensive multi-page company profile template featuring company history, services, B-BBEE certification details, and director information with consistent 3D branding.</p>
+                <a href="company-profile.html" class="btn">View Profile</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">📋</div>
+                <h3 class="card-title">Customization Guide</h3>
+            </div>
+            <p class="card-description">Comprehensive guide for customizing colors, fonts, and 3D effects across all templates. Includes print optimization tips and brand consistency guidelines.</p>
+            <a href="customization-guide.html" class="btn">View Guide</a>
+        </div>
+
+        <div class="card special-card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">🤖</div>
+                <h3 class="card-title">AI-Powered Letter Generator</h3>
+            </div>
+            <p class="card-description">NEW! Interactive letterhead generator with AI writing assistant. Create, edit, and share professional letters instantly. Includes email and WhatsApp sharing.</p>
+            <a href="letterhead-generator.html" class="btn">Launch AI Generator</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(45deg, #e67e22, #d35400);">💡</div>
+                <h3 class="card-title">How to Use This Package</h3>
+            </div>
+            <p class="card-description">Complete step-by-step instructions for using these templates on your laptop. Works offline - no internet required after download!</p>
+            <a href="INSTALLATION-GUIDE.md" class="btn" download>Download Instructions</a>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive hover effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

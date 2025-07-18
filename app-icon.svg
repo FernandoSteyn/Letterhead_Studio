@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="appGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="60" fill="url(#appGrad)"/>
+  
+  <!-- Document icon -->
+  <rect x="130" y="80" width="252" height="320" rx="15" fill="white" opacity="0.95"/>
+  <rect x="130" y="80" width="252" height="80" rx="15" fill="#667eea"/>
+  
+  <!-- Header lines -->
+  <rect x="160" y="110" width="120" height="8" rx="4" fill="white"/>
+  <rect x="160" y="130" width="80" height="6" rx="3" fill="white" opacity="0.7"/>
+  
+  <!-- Body lines -->
+  <rect x="160" y="200" width="192" height="4" rx="2" fill="#34495e" opacity="0.6"/>
+  <rect x="160" y="220" width="180" height="4" rx="2" fill="#34495e" opacity="0.6"/>
+  <rect x="160" y="240" width="170" height="4" rx="2" fill="#34495e" opacity="0.6"/>
+  <rect x="160" y="260" width="185" height="4" rx="2" fill="#34495e" opacity="0.6"/>
+  <rect x="160" y="280" width="160" height="4" rx="2" fill="#34495e" opacity="0.6"/>
+  
+  <!-- AI spark -->
+  <circle cx="380" cy="120" r="25" fill="#e74c3c"/>
+  <text x="380" y="130" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">AI</text>
+  
+  <!-- Signature area -->
+  <rect x="160" y="320" width="100" height="2" rx="1" fill="#34495e" opacity="0.4"/>
+  <text x="180" y="345" fill="#34495e" font-family="Arial, sans-serif" font-size="12" opacity="0.6">Signature</text>
+</svg>

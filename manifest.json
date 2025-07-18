@@ -1,0 +1,26 @@
+{
+  "name": "AI Letterhead Generator",
+  "short_name": "Letterhead AI",
+  "description": "Professional letterhead generator with AI writing assistance",
+  "start_url": "/letterhead-generator.html",
+  "display": "standalone",
+  "background_color": "#2c3e50",
+  "theme_color": "#3498db",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["business", "productivity", "office"],
+  "lang": "en-US"
+}

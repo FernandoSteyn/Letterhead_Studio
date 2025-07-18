@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<!--
+  Interactive Letterhead Generator with AI Assistant
+  Created by Fernando Steyn - Premium Letterhead Package
+  Features: Editable templates, Gemini AI integration, Real-time preview
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Letterhead Generator</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Letterhead AI">
+    <link rel="apple-touch-icon" href="app-icon.svg">
+    
+    <!-- Mobile Optimization -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Letterhead AI">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Left Panel - Controls */
+        .control-panel {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .panel-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .template-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .template-option {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .template-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .template-option.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .ai-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .ai-section .section-title {
+            color: white;
+        }
+
+        .ai-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .ai-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .ai-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .ai-button.loading {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Right Panel - Preview */
+        .preview-panel {
+            flex: 1;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-toolbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-bottom: 1px solid #e1e5e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #5a67d8;
+        }
+
+        .letterhead-preview {
+            padding: 40px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Letterhead Styles */
+        .letterhead {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: 600px;
+        }
+        
+        /* Ensure all letterhead components are visible */
+        .letterhead-header,
+        .letter-content,
+        .company-info,
+        .contact-info,
+        .date-section,
+        .recipient-section,
+        .subject-section,
+        .signature-section {
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .letterhead-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-section img {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .company-info h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .company-info .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .company-info .registration {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .letter-content {
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .date-section {
+            text-align: right;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .recipient-section {
+            margin-bottom: 25px;
+        }
+
+        .subject-line {
+            font-weight: 600;
+            margin: 25px 0;
+            color: #2c3e50;
+        }
+
+        .letter-body {
+            margin-bottom: 30px;
+        }
+
+        .letter-body p {
+            margin-bottom: 15px;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+        }
+
+        .editable {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px dashed #667eea;
+            border-radius: 4px;
+            padding: 5px;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .editable:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .editable:focus {
+            outline: none;
+            background: white;
+            border: 2px solid #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+
+        .loading-indicator.show {
+            display: block;
+        }
+
+        /* Simple sharing styles */
+        .share-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .share-notification.show {
+            transform: translateX(0);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .control-panel {
+                width: 100%;
+                max-height: none;
+                overflow: visible;
+                border-radius: 0;
+            }
+
+            .preview-panel {
+                width: 100%;
+                height: auto;
+                min-height: 600px;
+            }
+
+            .letterhead-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo-section {
+                order: -1;
+                justify-self: center;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .action-btn {
+                flex: 1;
+                min-width: 120px;
+                font-size: 0.85rem;
+            }
+
+            .ai-section {
+                position: sticky;
+                bottom: 0;
+                background: rgba(102, 126, 234, 0.95);
+                backdrop-filter: blur(10px);
+                z-index: 100;
+            }
+            
+            #signatureModal {
+                padding: 20px;
+            }
+            
+            #signatureCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .form-input, .ai-textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .letterhead {
+                padding: 15px;
+                margin: 10px;
+            }
+
+            .letterhead-header {
+                padding: 20px 15px;
+            }
+
+            .company-info h1 {
+                font-size: 1.5rem;
+            }
+
+            .letter-content {
+                padding: 20px 15px;
+            }
+
+            .action-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background: white !important;
+            }
+            
+            .control-panel, .preview-toolbar, .email-modal, .app-container > :not(.preview-panel) { 
+                display: none !important; 
+            }
+            
+            .app-container {
+                display: block !important;
+                height: auto !important;
+            }
+            
+            .preview-panel { 
+                width: 100% !important;
+                height: auto !important;
+                background: white !important;
+                overflow: visible !important;
+                max-height: none !important;
+            }
+            
+            .letterhead-preview { 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important; 
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+            
+            .letterhead {
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+                page-break-inside: avoid;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .editable { 
+                background: transparent !important; 
+                border: none !important; 
+                outline: none !important;
+            }
+            
+            .letter-content {
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+            
+            #letterBody {
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header style="background: #2c3e50; color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button onclick="history.back()" style="background: #34495e; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                ← Back
+            </button>
+            <h1 style="margin: 0; font-size: 1.5rem;">AI Letterhead Generator</h1>
+        </div>
+        <nav style="display: flex; gap: 10px;">
+            <a href="index.html" style="color: white; text-decoration: none; padding: 8px 15px; background: #34495e; border-radius: 5px;">Home</a>
+            <a href="company-profile.html" style="color: white; text-decoration: none; padding: 8px 15px; background: #34495e; border-radius: 5px;">Company Profile</a>
+            <a href="customization-guide.html" style="color: white; text-decoration: none; padding: 8px 15px; background: #34495e; border-radius: 5px;">Templates</a>
+        </nav>
+    </header>
+
+    <div class="app-container">
+        <!-- Left Control Panel -->
+        <div class="control-panel">
+            <!-- Template Selection Section -->
+            <div class="panel-section">
+                <h3 class="section-title">🎨 Template Style</h3>
+                <div class="form-group">
+                    <label class="form-label">Choose Template</label>
+                    <select class="form-input" id="templateSelector" onchange="changeTemplate()">
+                        <option value="classic">Classic Corporate</option>
+                        <option value="bold">Bold Construction</option>
+                        <option value="contemporary">Contemporary Asymmetric</option>
+                        <option value="elegant">Elegant Professional</option>
+                        <option value="minimalist">Modern Minimalist</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Company Details Section -->
+            <div class="panel-section">
+                <h3 class="section-title">🏢 Company Details</h3>
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-input" id="companyName" value="General Material Ckraftmanship" placeholder="Your Company Name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company Type</label>
+                    <input type="text" class="form-input" id="companyType" value="(Pty) Ltd" placeholder="(Pty) Ltd, LLC, Inc">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Registration Number</label>
+                    <input type="text" class="form-input" id="regNumber" value="2025/273604/07" placeholder="Your Registration Number">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Business Address</label>
+                    <input type="text" class="form-input" id="address" value="43c Whytes Weg, Kirkwood, Eastern Cape 6120" placeholder="Your Business Address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Country</label>
+                    <input type="text" class="form-input" id="country" value="South Africa" placeholder="Your Country">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" class="form-input" id="phone" value="068 301 5006" placeholder="Your Phone Number">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="email" value="fsleyn308@gmail.com" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Website</label>
+                    <input type="text" class="form-input" id="website" value="www.generalmc.co.za" placeholder="www.yourwebsite.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">B-BBEE Level (if applicable)</label>
+                    <select class="form-input" id="bbbeeLevel">
+                        <option value="">Not Applicable</option>
+                        <option value="Level 1" selected>Level 1 Contributor</option>
+                        <option value="Level 2">Level 2 Contributor</option>
+                        <option value="Level 3">Level 3 Contributor</option>
+                        <option value="Level 4">Level 4 Contributor</option>
+                        <option value="Level 5">Level 5 Contributor</option>
+                        <option value="Level 6">Level 6 Contributor</option>
+                        <option value="Level 7">Level 7 Contributor</option>
+                        <option value="Level 8">Level 8 Contributor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company Logo</label>
+                    <input type="file" class="form-input" id="logoUpload" accept="image/*" style="padding: 8px;">
+                    <div class="logo-preview" id="logoPreview" style="margin-top: 10px; display: none;">
+                        <img id="logoImage" style="max-width: 150px; max-height: 80px; border: 1px solid #ddd; border-radius: 5px;">
+                        <button type="button" onclick="removeLogo()" style="margin-left: 10px; padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 3px; cursor: pointer;">Remove</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Letter Details Section -->
+            <div class="panel-section">
+                <h3 class="section-title">📝 Letter Details</h3>
+                <div class="form-group">
+                    <label class="form-label">Load Previous Contact</label>
+                    <select class="form-input" id="contactHistory" onchange="loadContact()">
+                        <option value="">Select previous contact...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Recipient Name</label>
+                    <input type="text" class="form-input" id="recipientName" placeholder="Recipient Name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Recipient Company</label>
+                    <input type="text" class="form-input" id="recipientCompany" placeholder="Recipient Company">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Recipient Address</label>
+                    <input type="text" class="form-input" id="recipientAddress" placeholder="Recipient Address">
+                </div>
+                <div class="form-group">
+                    <button class="action-btn" onclick="saveContact(); showErrorNotification('Contact saved!', 'success')" style="width: 100%; margin-top: 10px;">💾 Save Contact</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-input" id="subject" placeholder="Letter Subject">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-input" id="signerName" placeholder="Your Full Name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Position/Title</label>
+                    <input type="text" class="form-input" id="signerPosition" placeholder="e.g., Managing Director, Project Manager">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Digital Signature (Optional)</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button type="button" onclick="openSignaturePad()" class="action-btn" style="background: #27ae60; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">✍️ Draw Signature</button>
+                        <input type="file" id="signatureUpload" accept="image/*" style="display: none;" onchange="uploadSignature(event)">
+                        <button type="button" onclick="document.getElementById('signatureUpload').click()" class="action-btn" style="background: #3498db; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">📁 Upload Image</button>
+                    </div>
+                    <div id="signaturePreview" style="display: none; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background: white; text-align: center;">
+                        <img id="signatureImage" style="max-height: 60px; max-width: 200px;">
+                        <button type="button" onclick="removeSignature()" style="display: block; margin: 10px auto 0; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove Signature</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Assistant Section -->
+            <div class="panel-section ai-section">
+                <h3 class="section-title">🤖 AI Letter Assistant</h3>
+                <div class="form-group">
+                    <label class="form-label" style="color: white;">What type of letter do you need?</label>
+                    <textarea class="ai-textarea" id="letterPrompt" placeholder="E.g., 'Write a professional business proposal for construction services' or 'Create a follow-up letter for a client meeting'"></textarea>
+                </div>
+                <button class="ai-button" onclick="generateLetter()">✨ Generate Letter</button>
+                <button class="ai-button" onclick="improveLetter()">📝 Improve Current Letter</button>
+                <button class="ai-button" onclick="humanizeLetter()">🧠 Humanize Text</button>
+                <button class="ai-button" onclick="makeMoreFormal()">👔 Make More Formal</button>
+                <button class="ai-button" onclick="makeMoreFriendly()">😊 Make More Friendly</button>
+                <button class="ai-button" onclick="testAIConnection()" style="background: #e67e22; margin-top: 10px;">🔧 Test AI Connection</button>
+                <div class="loading-indicator" id="aiLoading">
+                    🤖 AI is writing your letter...
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Preview Panel -->
+        <div class="preview-panel">
+            <div class="preview-toolbar">
+                <span class="preview-title">📄 Live Preview</span>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="shareViaEmail()">📧 Email</button>
+                    <button class="action-btn" onclick="shareViaWhatsApp()">💬 WhatsApp</button>
+                    <button class="action-btn" onclick="copyToClipboard()">📋 Copy</button>
+                    <button class="action-btn" onclick="printLetter()">🖨️ Print</button>
+                </div>
+            </div>
+
+            <div class="letterhead-preview">
+                <div class="letterhead" id="letterheadPreview">
+                    <!-- Letterhead Header -->
+                    <div class="letterhead-header">
+                        <div class="logo-section" id="logoSection" style="display: none;">
+                            <img id="headerLogo" style="max-height: 60px; max-width: 120px; object-fit: contain;">
+                        </div>
+                        <div class="company-info">
+                            <h1 class="editable" contenteditable="true" id="previewCompanyName">[Your Company Name]</h1>
+                            <div class="subtitle editable" contenteditable="true" id="previewCompanyType">[Company Type]</div>
+                            <div class="registration editable" contenteditable="true" id="previewRegNumber">Registration: [Your Registration Number]</div>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <span>📍</span>
+                                <span class="editable" contenteditable="true" id="previewAddress">[Your Business Address]</span>
+                            </div>
+                            <div class="contact-item" id="countrySection" style="display: none;">
+                                <span>🌍</span>
+                                <span class="editable" contenteditable="true" id="previewCountry">[Country]</span>
+                            </div>
+                            <div class="contact-item">
+                                <span>📞</span>
+                                <span class="editable" contenteditable="true" id="previewPhone">[Your Phone Number]</span>
+                            </div>
+                            <div class="contact-item">
+                                <span>✉️</span>
+                                <span class="editable" contenteditable="true" id="previewEmail">[Your Email Address]</span>
+                            </div>
+                            <div class="contact-item">
+                                <span>🌐</span>
+                                <span class="editable" contenteditable="true" id="previewWebsite">[Your Website]</span>
+                            </div>
+                            <div class="contact-item" id="bbbeeSection" style="display: none;">
+                                <span>⭐</span>
+                                <span class="editable" contenteditable="true" id="previewBBBEE">[B-BBEE Level]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Letter Content -->
+                    <div class="letter-content">
+                        <div class="date-section">
+                            <span id="currentDate"></span>
+                        </div>
+
+                        <div class="recipient-section">
+                            <div class="editable" contenteditable="true" id="previewRecipientName">[Recipient Name]</div>
+                            <div class="editable" contenteditable="true" id="previewRecipientCompany">[Recipient Company]</div>
+                            <div class="editable" contenteditable="true" id="previewRecipientAddress">[Recipient Address]</div>
+                        </div>
+
+                        <div class="subject-line">
+                            <strong>Subject: <span class="editable" contenteditable="true" id="previewSubject">[Letter Subject]</span></strong>
+                        </div>
+
+                        <div class="letter-body">
+                            <div class="editable" contenteditable="true" id="letterBody" style="min-height: 200px;">
+                                <p>Dear <span id="recipientNameInBody">[Recipient Name]</span>,</p>
+                                <p>Click here to start writing your letter, or use the AI Assistant to generate professional content automatically.</p>
+                                <p>The AI can help you write various types of business correspondence including proposals, follow-up letters, quotations, and more.</p>
+                                <p>Sincerely,</p>
+                            </div>
+                        </div>
+
+                        <div class="signature-section">
+                            <div class="signature-line" id="digitalSignatureContainer" style="display: none; margin: 20px 0 10px 0;">
+                                <img id="letterSignatureImage" style="max-height: 50px; max-width: 180px; object-fit: contain;">
+                            </div>
+                            <div id="signatureName">[Your Name]</div>
+                            <div id="previewSignerPosition">[Your Position]</div>
+                            <div id="signatureCompany">[Your Company Name]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signature Drawing Modal -->
+    <div id="signatureModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+            <h3 style="margin-bottom: 20px; color: #2c3e50;">Draw Your Digital Signature</h3>
+            <p style="margin-bottom: 15px; color: #7f8c8d; font-size: 14px;">
+                ⚠️ <strong>Digital Signature Consent:</strong> By creating and using this signature, you consent to its use for business correspondence. This signature will be saved locally on your device.
+            </p>
+            <canvas id="signatureCanvas" width="400" height="150" style="border: 2px solid #bdc3c7; border-radius: 8px; cursor: crosshair; background: white; display: block; margin: 0 auto;"></canvas>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="clearSignature()" style="background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🗑️ Clear</button>
+                <button onclick="saveSignature()" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">✅ Save Signature</button>
+                <button onclick="closeSignatureModal()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">❌ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Form input sync with preview
+        const formInputs = {
+            'companyName': 'previewCompanyName',
+            'companyType': 'previewCompanyType',
+            'regNumber': 'previewRegNumber',
+            'address': 'previewAddress',
+            'country': 'previewCountry',
+            'phone': 'previewPhone',
+            'email': 'previewEmail',
+            'website': 'previewWebsite',
+            'bbbeeLevel': 'previewBBBEE',
+            'recipientName': 'previewRecipientName',
+            'recipientCompany': 'previewRecipientCompany',
+            'recipientAddress': 'previewRecipientAddress',
+            'subject': 'previewSubject',
+            'signerName': 'signatureName',
+            'signerPosition': 'previewSignerPosition'
+        };
+
+        // Add event listeners for real-time updates with debouncing
+        Object.keys(formInputs).forEach(inputId => {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(formInputs[inputId]);
+            
+            if (!input || !preview) {
+                console.warn(`Missing element: ${inputId} or ${formInputs[inputId]}`);
+                return;
+            }
+            
+            let timeoutId;
+            input.addEventListener('input', () => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    try {
+                        if (input.value.trim()) {
+                            preview.textContent = input.value;
+                    
+                    // Special handling for registration number
+                    if (inputId === 'regNumber') {
+                        preview.textContent = 'Registration: ' + input.value;
+                    }
+                    
+                    // Special handling for country
+                    if (inputId === 'country') {
+                        document.getElementById('countrySection').style.display = 'block';
+                    }
+                    
+                    // Special handling for B-BBEE level
+                    if (inputId === 'bbbeeLevel') {
+                        if (input.value) {
+                            document.getElementById('bbbeeSection').style.display = 'block';
+                            preview.textContent = input.value + ' B-BBEE Contributor';
+                        } else {
+                            document.getElementById('bbbeeSection').style.display = 'none';
+                        }
+                    }
+                    
+                    // Update recipient name in letter body
+                    if (inputId === 'recipientName') {
+                        document.getElementById('recipientNameInBody').textContent = input.value || '[Recipient Name]';
+                        // Auto-save contact when recipient details change
+                        if (input.value.trim()) {
+                            setTimeout(saveContact, 1000);
+                        }
+                    }
+                    
+                            // Auto-populate signature company name
+                            if (inputId === 'companyName') {
+                                const sigCompany = document.getElementById('signatureCompany');
+                                if (sigCompany) {
+                                    sigCompany.textContent = input.value || '[Your Company Name]';
+                                }
+                            }
+                        } else {
+                            preview.textContent = preview.getAttribute('data-placeholder') || `[${inputId.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}]`;
+                        }
+                    } catch (error) {
+                        console.error(`Error updating ${inputId}:`, error);
+                        showErrorNotification('Error updating preview. Please refresh the page.');
+                    }
+                }, 150); // 150ms debounce
+            });
+        });
+
+        // Enhanced Error Handling System
+        function showErrorNotification(message, type = 'error') {
+            // Remove any existing notifications to avoid stacking
+            const existingNotifications = document.querySelectorAll('.status-notification');
+            existingNotifications.forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = 'status-notification';
+            
+            // Enhanced styling based on type
+            let backgroundColor, icon;
+            switch(type) {
+                case 'success':
+                    backgroundColor = '#27ae60';
+                    icon = '✅';
+                    break;
+                case 'error':
+                    backgroundColor = '#e74c3c';
+                    icon = '❌';
+                    break;
+                case 'info':
+                    backgroundColor = '#3498db';
+                    icon = 'ℹ️';
+                    break;
+                default:
+                    backgroundColor = '#f39c12';
+                    icon = '⚠️';
+            }
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${backgroundColor};
+                color: white;
+                padding: 18px 25px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+                z-index: 10000;
+                max-width: 400px;
+                font-size: 15px;
+                font-weight: 500;
+                animation: slideIn 0.4s ease;
+                border-left: 5px solid rgba(255,255,255,0.3);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            
+            notification.innerHTML = `
+                <span style="font-size: 18px;">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after longer delay for better visibility
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.4s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 400);
+            }, type === 'success' ? 5000 : 6000); // Success messages stay longer
+        }
+
+        // Add CSS animation for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            showErrorNotification('Something went wrong. The app is still working.');
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+            showErrorNotification('Network error. Please check your connection.');
+        });
+
+        // Improved element selection with error handling
+        function safeGetElement(id, showError = false) {
+            const element = document.getElementById(id);
+            if (!element && showError) {
+                console.warn(`Element not found: ${id}`);
+                showErrorNotification(`Interface element missing: ${id}`);
+            }
+            return element;
+        }
+
+        // Safe content update function
+        function safeUpdateContent(elementId, content, fallback = '') {
+            try {
+                const element = safeGetElement(elementId);
+                if (element) {
+                    element.textContent = content || fallback;
+                    return true;
+                }
+            } catch (error) {
+                console.error(`Error updating ${elementId}:`, error);
+                return false;
+            }
+            return false;
+        }
+
+        // Contact History Management
+        function saveContact() {
+            const recipientName = safeGetElement('recipientName')?.value?.trim();
+            const recipientCompany = safeGetElement('recipientCompany')?.value?.trim();
+            const recipientAddress = safeGetElement('recipientAddress')?.value?.trim();
+            
+            if (!recipientName) return;
+            
+            const contact = {
+                name: recipientName,
+                company: recipientCompany || '',
+                address: recipientAddress || '',
+                id: Date.now(),
+                lastUsed: new Date().toISOString()
+            };
+            
+            let contacts = JSON.parse(localStorage.getItem('letterContacts') || '[]');
+            
+            // Remove duplicate if exists
+            contacts = contacts.filter(c => 
+                !(c.name === contact.name && c.company === contact.company)
+            );
+            
+            contacts.unshift(contact);
+            
+            // Keep only last 20 contacts
+            contacts = contacts.slice(0, 20);
+            
+            localStorage.setItem('letterContacts', JSON.stringify(contacts));
+            loadContactHistory();
+        }
+        
+        function loadContact() {
+            const select = safeGetElement('contactHistory');
+            if (!select || !select.value) return;
+            
+            const contacts = JSON.parse(localStorage.getItem('letterContacts') || '[]');
+            const contact = contacts.find(c => c.id == select.value);
+            
+            if (contact) {
+                safeUpdateContent('recipientName', contact.name);
+                safeUpdateContent('recipientCompany', contact.company);
+                safeUpdateContent('recipientAddress', contact.address);
+                
+                // Update form inputs
+                const nameInput = safeGetElement('recipientName');
+                const companyInput = safeGetElement('recipientCompany');
+                const addressInput = safeGetElement('recipientAddress');
+                
+                if (nameInput) nameInput.value = contact.name;
+                if (companyInput) companyInput.value = contact.company;
+                if (addressInput) addressInput.value = contact.address;
+                
+                // Trigger preview updates
+                updatePreviewFromInputs();
+                showErrorNotification('Contact loaded successfully!', 'success');
+            }
+        }
+        
+        function loadContactHistory() {
+            const select = safeGetElement('contactHistory');
+            if (!select) return;
+            
+            const contacts = JSON.parse(localStorage.getItem('letterContacts') || '[]');
+            
+            // Clear existing options except first
+            select.innerHTML = '<option value="">Select previous contact...</option>';
+            
+            contacts.forEach(contact => {
+                const option = document.createElement('option');
+                option.value = contact.id;
+                option.textContent = `${contact.name}${contact.company ? ` (${contact.company})` : ''}`;
+                select.appendChild(option);
+            });
+        }
+        
+        function updatePreviewFromInputs() {
+            Object.keys(formInputs).forEach(inputId => {
+                const input = safeGetElement(inputId);
+                const preview = safeGetElement(formInputs[inputId]);
+                
+                if (input && preview && input.value.trim()) {
+                    preview.textContent = input.value;
+                }
+            });
+        }
+
+        // AI Connection Testing with detailed logging
+        async function testAIConnection() {
+            console.log('🔧 Starting AI connection test...');
+            showLoading(true);
+            
+            try {
+                const apiUrl = '/api/test-ai';
+                console.log('📡 Making fetch request to:', apiUrl);
+                console.log('📡 Current window location:', window.location.href);
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'cors'
+                });
+                
+                console.log('📋 Response status:', response.status);
+                console.log('📋 Response headers:', [...response.headers.entries()]);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('📋 Response data:', result);
+                
+                if (result.success) {
+                    showErrorNotification('AI connection working perfectly!', 'success');
+                    console.log('✅ AI test successful:', result.testResponse);
+                } else {
+                    showErrorNotification(`AI Connection Failed: ${result.error}`, 'error');
+                    console.error('❌ AI test details:', result.details);
+                }
+            } catch (error) {
+                console.error('❌ Test failed with error:', error);
+                console.error('❌ Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+                showErrorNotification(`Connection test failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Free Sharing Functions
+        function shareViaEmail() {
+            const recipientEmail = prompt("Enter recipient's email address:");
+            if (!recipientEmail) return;
+            
+            const subject = document.getElementById('subject').value || "Professional Business Letter";
+            const letterText = getLetterAsText();
+            
+            const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(letterText)}`;
+            
+            try {
+                window.location.href = mailtoLink;
+                alert("Email app opened! Complete and send the email from your email application.");
+            } catch (error) {
+                // Fallback: copy to clipboard
+                copyToClipboard();
+                alert(`Email app not available. Letter copied to clipboard!\n\nManually send to: ${recipientEmail}\nSubject: ${subject}`);
+            }
+        }
+
+        function shareViaWhatsApp() {
+            const phoneNumber = prompt("Enter recipient's WhatsApp number (with country code, e.g., +1234567890):");
+            if (!phoneNumber) return;
+            
+            const letterText = getLetterAsText();
+            const message = `Professional Business Letter:\n\n${letterText}`;
+            
+            const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function copyToClipboard() {
+            const letterText = getLetterAsText();
+            
+            navigator.clipboard.writeText(letterText).then(() => {
+                alert("Letter copied to clipboard! You can now paste it anywhere.");
+            }).catch(() => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = letterText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert("Letter copied to clipboard!");
+            });
+        }
+
+        function getLetterAsText() {
+            const letterhead = document.getElementById('letterheadPreview');
+            
+            // Create a clean text version
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = letterhead.innerHTML;
+            
+            // Remove contenteditable attributes
+            tempDiv.querySelectorAll('[contenteditable]').forEach(el => {
+                el.removeAttribute('contenteditable');
+                el.classList.remove('editable');
+            });
+            
+            // Convert to clean text
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            
+            // Clean up and format the text
+            return textContent
+                .replace(/\s+/g, ' ')
+                .replace(/\n\s*\n/g, '\n\n')
+                .trim();
+        }
+
+        // AI Functions
+        async function generateLetter() {
+            console.log('🚀 Starting letter generation...');
+            
+            const prompt = document.getElementById('letterPrompt').value;
+            console.log('📝 Prompt:', prompt);
+            
+            if (!prompt.trim()) {
+                alert('Please describe what type of letter you need in the AI prompt box.');
+                return;
+            }
+
+            showLoading(true);
+            
+            try {
+                console.log('📡 Making request to /api/generate-letter');
+                const response = await fetch('/api/generate-letter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        companyName: document.getElementById('companyName').value || 'Your Company',
+                        recipientName: document.getElementById('recipientName').value || 'Valued Client'
+                    })
+                });
+
+                console.log('📋 Response status:', response.status);
+                console.log('📋 Response ok:', response.ok);
+                
+                const data = await response.json();
+                console.log('📋 Response data:', data);
+                
+                if (data.success && data.content) {
+                    console.log('✅ Letter generation successful');
+                    const letterBody = document.getElementById('letterBody');
+                    if (letterBody) {
+                        // Format the AI content properly
+                        let formattedContent = data.content;
+                        console.log('📝 Original content:', formattedContent);
+                        
+                        // Ensure content has proper HTML formatting
+                        if (!formattedContent.includes('<p>') && !formattedContent.includes('<br>')) {
+                            // Add paragraph tags if missing
+                            formattedContent = formattedContent
+                                .split('\n\n')
+                                .filter(para => para.trim())
+                                .map(para => `<p>${para.trim()}</p>`)
+                                .join('');
+                        }
+                        
+                        console.log('📝 Formatted content:', formattedContent);
+                        letterBody.innerHTML = formattedContent;
+                        autoSave();
+                        showErrorNotification('Letter generated successfully!', 'success');
+                    } else {
+                        console.error('❌ letterBody element not found');
+                    }
+                } else {
+                    console.error('❌ AI service error:', data);
+                    showErrorNotification(`AI service error: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Letter generation failed:', error);
+                showErrorNotification('Unable to connect to AI service. Please check your internet connection and try again.', 'error');
+            }
+            
+            showLoading(false);
+        }
+
+        async function improveLetter() {
+            const currentContent = document.getElementById('letterBody').textContent;
+            if (!currentContent.trim() || currentContent.includes('Click here to start')) {
+                alert('Please write some letter content first, then I can help improve it.');
+                return;
+            }
+
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/api/improve-letter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: currentContent
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.content) {
+                    document.getElementById('letterBody').innerHTML = data.content;
+                    autoSave();
+                    showErrorNotification('Letter improved successfully!', 'success');
+                } else {
+                    showErrorNotification(`AI improvement failed: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Letter improvement failed:', error);
+                showErrorNotification('Unable to connect to AI service. Please check your connection and try again.', 'error');
+            }
+            
+            showLoading(false);
+        }
+
+        async function makeMoreFormal() {
+            await adjustTone('formal');
+        }
+
+        async function makeMoreFriendly() {
+            await adjustTone('friendly');
+        }
+
+        async function humanizeLetter() {
+            const currentContent = document.getElementById('letterBody').textContent;
+            if (!currentContent.trim() || currentContent.includes('Click here to start')) {
+                showErrorNotification('Please write some letter content first before humanizing.', 'info');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                console.log('🧠 Humanizing letter content...');
+                const response = await fetch('/api/humanize-text', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        content: currentContent,
+                        companyName: document.getElementById('companyName').value || 'General Material Ckraftmanship',
+                        recipientName: document.getElementById('recipientName').value || 'Valued Client'
+                    })
+                });
+
+                console.log('📡 Humanize response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('📡 Humanize response data:', result);
+                
+                if (result.success && result.content) {
+                    document.getElementById('letterBody').innerHTML = result.content;
+                    autoSave();
+                    showErrorNotification('Letter humanized successfully! Content now sounds more natural.', 'success');
+                } else {
+                    showErrorNotification(`Humanization failed: ${result.error || 'Unknown error occurred'}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Humanize failed:', error);
+                showErrorNotification(`Humanize failed: ${error.message || 'Unknown error'}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function adjustTone(tone) {
+            const currentContent = document.getElementById('letterBody').innerHTML;
+            if (!currentContent.trim() || currentContent.includes('Click here to start')) {
+                alert('Please write some letter content first.');
+                return;
+            }
+
+            showLoading(true);
+            
+            try {
+                const endpoint = tone === 'formal' ? '/api/make-formal' : '/api/make-friendly';
+                
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: currentContent,
+                        companyName: document.getElementById('companyName').value || 'General Material Ckraftmanship',
+                        recipientName: document.getElementById('recipientName').value || 'Valued Client'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.content) {
+                    document.getElementById('letterBody').innerHTML = data.content;
+                    autoSave();
+                    showErrorNotification(`Letter made more ${tone} successfully!`, 'success');
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                console.error(`❌ Tone adjustment failed:`, error);
+                showErrorNotification(`Tone adjustment failed: ${error.message || 'Unknown error'}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function testAIConnection() {
+            console.log('🧪 Testing AI connectivity...');
+            showLoading(true);
+            
+            try {
+                // Add a timeout to the fetch request for better error handling
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
+                const response = await fetch('/api/test-ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                console.log('📡 Response status:', response.status);
+                
+                const result = await response.json();
+                console.log('📡 Response data:', result);
+                
+                if (result.success) {
+                    showErrorNotification(`AI Connection Test Successful! Gemini AI is responding properly.`, 'success');
+                    console.log('✅ AI test response:', result.testResponse);
+                    
+                    // Also update any status indicators on the page
+                    const testButton = document.querySelector('[onclick="testAIConnection()"]');
+                    if (testButton) {
+                        const originalText = testButton.textContent;
+                        testButton.textContent = '✅ Connection Verified';
+                        testButton.style.background = '#27ae60';
+                        setTimeout(() => {
+                            testButton.textContent = originalText;
+                            testButton.style.background = '';
+                        }, 3000);
+                    }
+                } else {
+                    showErrorNotification(`AI Connection Failed: ${result.error || 'Unknown error occurred'}`, 'error');
+                    console.error('❌ AI test details:', result.details);
+                }
+            } catch (error) {
+                console.error('❌ Test failed with error:', error);
+                showErrorNotification(`Connection test failed: ${error.message || 'Network error'}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showLoading(show) {
+            const loading = document.getElementById('aiLoading');
+            if (show) {
+                loading.classList.add('show');
+                document.querySelectorAll('.ai-button').forEach(btn => {
+                    btn.classList.add('loading');
+                    btn.disabled = true;
+                });
+            } else {
+                loading.classList.remove('show');
+                document.querySelectorAll('.ai-button').forEach(btn => {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                });
+            }
+        }
+
+        function printLetter() {
+            // Show helpful tip for saving as PDF
+            if (confirm('Ready to print your letter?\n\nTip: To save as PDF, choose "Save as PDF" or "Microsoft Print to PDF" in the print dialog.')) {
+                window.print();
+            }
+        }
+
+        // Auto-save to localStorage
+        function autoSave() {
+            const formData = {};
+            Object.keys(formInputs).forEach(inputId => {
+                formData[inputId] = document.getElementById(inputId).value;
+            });
+            formData.letterBody = document.getElementById('letterBody').innerHTML;
+            localStorage.setItem('letterheadData', JSON.stringify(formData));
+        }
+
+        // Load saved data
+        function loadSavedData() {
+            const savedData = localStorage.getItem('letterheadData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (key === 'letterBody') {
+                            element.innerHTML = data[key];
+                        } else {
+                            element.value = data[key];
+                            // Trigger input event to update preview
+                            element.dispatchEvent(new Event('input'));
+                        }
+                    }
+                });
+            }
+        }
+
+        // Logo handling functions
+        document.getElementById('logoUpload').addEventListener('change', function(event) {
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPG, PNG, GIF, or SVG).');
+                    event.target.value = '';
+                    return;
+                }
+                
+                // Validate file size (max 2MB for better performance)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Image file must be smaller than 2MB for optimal performance.');
+                    event.target.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const logoDataUrl = e.target.result;
+                        
+                        // Safely update preview elements
+                        const logoImage = document.getElementById('logoImage');
+                        const logoPreview = document.getElementById('logoPreview');
+                        const headerLogo = document.getElementById('headerLogo');
+                        const logoSection = document.getElementById('logoSection');
+                        
+                        if (logoImage && logoPreview && headerLogo && logoSection) {
+                            logoImage.src = logoDataUrl;
+                            logoPreview.style.display = 'block';
+                            headerLogo.src = logoDataUrl;
+                            logoSection.style.display = 'block';
+                            
+                            // Save to localStorage
+                            localStorage.setItem('userLogo', logoDataUrl);
+                        }
+                    } catch (error) {
+                        console.error('Error processing logo:', error);
+                        alert('Error processing logo. Please try a different image file.');
+                    }
+                };
+                
+                reader.onerror = function() {
+                    alert('Error reading the image file. Please try again.');
+                    event.target.value = '';
+                };
+                
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                console.error('Logo upload error:', error);
+                alert('Error uploading logo. Please try again.');
+                event.target.value = '';
+            }
+        });
+
+        function removeLogo() {
+            // Hide previews
+            document.getElementById('logoPreview').style.display = 'none';
+            document.getElementById('logoSection').style.display = 'none';
+            
+            // Clear file input
+            document.getElementById('logoUpload').value = '';
+            
+            // Remove from localStorage
+            localStorage.removeItem('userLogo');
+            autoSave();
+        }
+
+        // Load saved logo on page load
+        function loadSavedLogo() {
+            const savedLogo = localStorage.getItem('userLogo');
+            if (savedLogo) {
+                document.getElementById('logoImage').src = savedLogo;
+                document.getElementById('logoPreview').style.display = 'block';
+                document.getElementById('headerLogo').src = savedLogo;
+                document.getElementById('logoSection').style.display = 'block';
+            }
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(autoSave, 30000);
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            // Create install banner
+            const installBanner = document.createElement('div');
+            installBanner.innerHTML = `
+                <div style="
+                    position: fixed; 
+                    top: 10px; 
+                    left: 50%; 
+                    transform: translateX(-50%); 
+                    background: #667eea; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border-radius: 25px; 
+                    z-index: 1000; 
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 14px;
+                ">
+                    📱 Install as App
+                    <button onclick="installApp()" style="
+                        background: white; 
+                        color: #667eea; 
+                        border: none; 
+                        padding: 5px 15px; 
+                        border-radius: 15px; 
+                        cursor: pointer; 
+                        font-weight: 500;
+                    ">Install</button>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: transparent; 
+                        color: white; 
+                        border: none; 
+                        cursor: pointer; 
+                        font-size: 16px;
+                    ">✕</button>
+                </div>
+            `;
+            document.body.appendChild(installBanner);
+        }
+
+        window.installApp = function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    document.querySelector('[onclick="installApp()"]').parentElement.parentElement.remove();
+                });
+            }
+        };
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed');
+                    });
+            });
+        }
+
+        // Digital Signature Functions
+        let canvas, ctx, isDrawing = false;
+
+        function openSignaturePad() {
+            document.getElementById('signatureModal').style.display = 'flex';
+            canvas = document.getElementById('signatureCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set up canvas for drawing
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveSignature() {
+            const signatureDataUrl = canvas.toDataURL('image/png');
+            
+            // Show in preview
+            document.getElementById('signatureImage').src = signatureDataUrl;
+            document.getElementById('signaturePreview').style.display = 'block';
+            
+            // Show in letterhead
+            document.getElementById('letterSignatureImage').src = signatureDataUrl;
+            document.getElementById('digitalSignatureContainer').style.display = 'block';
+            
+            // Save to localStorage
+            localStorage.setItem('userSignature', signatureDataUrl);
+            
+            closeSignatureModal();
+            alert('Signature saved successfully! ✅');
+        }
+
+        function closeSignatureModal() {
+            document.getElementById('signatureModal').style.display = 'none';
+        }
+
+        function uploadSignature(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file for your signature.');
+                return;
+            }
+            
+            if (file.size > 1024 * 1024) { // 1MB limit
+                alert('Signature image must be smaller than 1MB.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const signatureDataUrl = e.target.result;
+                
+                // Show in preview
+                document.getElementById('signatureImage').src = signatureDataUrl;
+                document.getElementById('signaturePreview').style.display = 'block';
+                
+                // Show in letterhead
+                document.getElementById('letterSignatureImage').src = signatureDataUrl;
+                document.getElementById('digitalSignatureContainer').style.display = 'block';
+                
+                // Save to localStorage
+                localStorage.setItem('userSignature', signatureDataUrl);
+                
+                alert('Signature uploaded successfully! ✅');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeSignature() {
+            // Hide previews
+            document.getElementById('signaturePreview').style.display = 'none';
+            document.getElementById('digitalSignatureContainer').style.display = 'none';
+            
+            // Clear file input
+            document.getElementById('signatureUpload').value = '';
+            
+            // Remove from localStorage
+            localStorage.removeItem('userSignature');
+            
+            alert('Signature removed.');
+        }
+
+        function loadSavedSignature() {
+            const savedSignature = localStorage.getItem('userSignature');
+            if (savedSignature) {
+                document.getElementById('signatureImage').src = savedSignature;
+                document.getElementById('signaturePreview').style.display = 'block';
+                document.getElementById('letterSignatureImage').src = savedSignature;
+                document.getElementById('digitalSignatureContainer').style.display = 'block';
+            }
+        }
+
+        // Simple, direct initialization 
+        function initApp() {
+            try {
+                // Set current date immediately
+                const dateElement = document.getElementById('currentDate');
+                if (dateElement) {
+                    dateElement.textContent = new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+                }
+                
+                // Make sure preview is visible
+                const preview = document.getElementById('letterheadPreview');
+                if (preview) {
+                    preview.style.display = 'block';
+                    preview.style.visibility = 'visible';
+                    preview.style.opacity = '1';
+                }
+                
+                loadSavedData();
+                loadSavedLogo(); 
+                loadSavedSignature();
+                loadContactHistory();
+                loadTemplateFromURL();
+                
+                console.log('App initialized successfully');
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showErrorNotification('Initialization failed. Please refresh.');
+            }
+        }
+        
+        // Run immediately if DOM is ready, otherwise wait
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+
+        // Template management
+        const templateStyles = {
+            classic: {
+                headerBg: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
+                accentColor: '#3498db',
+                fontFamily: 'Georgia, serif'
+            },
+            bold: {
+                headerBg: 'linear-gradient(135deg, #e67e22 0%, #d35400 100%)',
+                accentColor: '#f39c12',
+                fontFamily: 'Arial, sans-serif'
+            },
+            contemporary: {
+                headerBg: 'linear-gradient(135deg, #1abc9c 0%, #16a085 100%)',
+                accentColor: '#27ae60',
+                fontFamily: 'Helvetica, sans-serif'
+            },
+            elegant: {
+                headerBg: 'linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%)',
+                accentColor: '#e74c3c',
+                fontFamily: 'Times New Roman, serif'
+            },
+            minimalist: {
+                headerBg: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+                accentColor: '#34495e',
+                fontFamily: 'Segoe UI, sans-serif'
+            }
+        };
+
+        function changeTemplate() {
+            const selectedTemplate = document.getElementById('templateSelector').value;
+            const style = templateStyles[selectedTemplate];
+            
+            if (style) {
+                // Update letterhead header style
+                const header = document.querySelector('.letterhead-header');
+                if (header) {
+                    header.style.background = style.headerBg;
+                }
+                
+                // Update accent elements
+                document.querySelectorAll('.contact-item').forEach(el => {
+                    el.style.borderLeft = `3px solid ${style.accentColor}`;
+                });
+                
+                // Update letterhead styling
+                const letterhead = document.querySelector('.letterhead');
+                if (letterhead) {
+                    letterhead.style.borderTop = `5px solid ${style.accentColor}`;
+                    letterhead.style.fontFamily = style.fontFamily;
+                }
+                
+                // Save template preference
+                localStorage.setItem('selectedTemplate', selectedTemplate);
+                autoSave();
+                showErrorNotification(`Switched to ${selectedTemplate} template!`, 'success');
+            }
+        }
+
+        function loadTemplateFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const templateParam = urlParams.get('template');
+            
+            if (templateParam && templateStyles[templateParam]) {
+                document.getElementById('templateSelector').value = templateParam;
+                setTimeout(changeTemplate, 100); // Delay to ensure DOM is ready
+            } else {
+                // Load saved template preference
+                const savedTemplate = localStorage.getItem('selectedTemplate');
+                if (savedTemplate && templateStyles[savedTemplate]) {
+                    document.getElementById('templateSelector').value = savedTemplate;
+                    setTimeout(changeTemplate, 100);
+                }
+            }
+        }
+
+        // Add some visual flair with animations
+        document.querySelectorAll('.editable').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+                autoSave();
+            });
+        });
+    </script>
+</body>
+</html>

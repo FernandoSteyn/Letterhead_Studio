@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<!--
+  Customization Guide for Premium Letterhead Package
+  Created by Fernando Steyn - Premium Letterhead Package
+  Completely offline accessible and independent
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customization Guide - General Material Ckraftmanship Letterhead Package</title>
+    <link rel="stylesheet" href="assets/css/shared.css">
+    <link rel="stylesheet" href="assets/css/letterhead-elegant.css">
+    <style>
+        /* Custom styles for the guide */
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            box-shadow: var(--shadow-medium);
+            border-radius: 20px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            transform: translateZ(10px);
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .guide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            text-shadow: var(--text-shadow);
+        }
+
+        .guide-subtitle {
+            font-size: 1.3rem;
+            color: var(--primary-gray);
+            font-style: italic;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, rgba(46, 134, 171, 0.1), rgba(255, 107, 53, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .toc-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            list-style: none;
+        }
+
+        .toc-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-orange);
+            transition: var(--transition-smooth);
+        }
+
+        .toc-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .toc-link {
+            text-decoration: none;
+            color: var(--neutral-dark);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            transform: translateZ(5px);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-yellow);
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-orange);
+        }
+
+        .subsection {
+            margin-bottom: 40px;
+        }
+
+        .subsection-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-gray);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            font-size: 1.3rem;
+            color: var(--primary-orange);
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Roboto', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .color-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .color-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-swatch {
+            height: 80px;
+            width: 100%;
+            position: relative;
+        }
+
+        .color-info {
+            padding: 15px;
+        }
+
+        .color-name {
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: 5px;
+        }
+
+        .color-value {
+            font-family: 'Roboto', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-gray);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .template-preview {
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .template-info {
+            padding: 20px;
+        }
+
+        .template-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .template-description {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--neutral-dark);
+            margin-bottom: 15px;
+        }
+
+        .template-features {
+            list-style: none;
+        }
+
+        .template-features li {
+            font-size: 0.85rem;
+            color: var(--primary-gray);
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .template-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.1));
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            color: #ef6c00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            background: white;
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-gray));
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .download-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .download-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            background: var(--primary-orange);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-yellow);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .guide-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .guide-title {
+                font-size: 2.2rem;
+            }
+            
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-palette,
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <header class="guide-header">
+            <h1 class="guide-title">Customization Guide</h1>
+            <p class="guide-subtitle">General Material Ckraftmanship Premium Letterhead Package</p>
+            <div class="bbee-badge" style="margin: 20px auto; width: fit-content;">
+                B-BBEE Level 1 Contributor • 135% Recognition
+            </div>
+        </header>
+
+        <!-- Table of Contents -->
+        <nav class="toc">
+            <h2 class="toc-title">📋 Table of Contents</h2>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#getting-started" class="toc-link">
+                        <span class="icon">🚀</span>
+                        Getting Started
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#templates-overview" class="toc-link">
+                        <span class="icon">📄</span>
+                        Templates Overview
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#customizing-content" class="toc-link">
+                        <span class="icon">✏️</span>
+                        Customizing Content
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#colors-branding" class="toc-link">
+                        <span class="icon">🎨</span>
+                        Colors & Branding
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#fonts-typography" class="toc-link">
+                        <span class="icon">📝</span>
+                        Fonts & Typography
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#3d-effects" class="toc-link">
+                        <span class="icon">🌟</span>
+                        3D Effects
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#print-optimization" class="toc-link">
+                        <span class="icon">🖨️</span>
+                        Print Optimization
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#troubleshooting" class="toc-link">
+                        <span class="icon">🔧</span>
+                        Troubleshooting
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Getting Started Section -->
+        <section id="getting-started" class="section">
+            <h2 class="section-title">🚀 Getting Started</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📦</span>
+                    Package Contents
+                </h3>
+                <p>Your premium letterhead package includes:</p>
+                <ul>
+                    <li><strong>5 Letterhead Variations:</strong> Classic, Minimalist, Bold, Elegant, Contemporary</li>
+                    <li><strong>Company Profile Document:</strong> Complete multi-page template</li>
+                    <li><strong>Shared Assets:</strong> CSS, JavaScript, and styling files</li>
+                    <li><strong>This Customization Guide:</strong> Comprehensive instructions</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">⚡</span>
+                    Quick Start Steps
+                </h3>
+                <ol class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Extract and Organize</div>
+                        <p>Extract all files to your desired folder. Maintain the folder structure for proper asset linking.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Choose Your Template</div>
+                        <p>Open any of the letterhead HTML files in your browser to preview the designs.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Customize Content</div>
+                        <p>Replace placeholder text with your actual business information using any text editor.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Adjust Styling</div>
+                        <p>Modify colors, fonts, and other styling elements in the CSS files.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Test and Print</div>
+                        <p>Preview your changes and test print functionality before final use.</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 Pro Tip</div>
+                <p>Always make a backup copy of the original files before making any modifications. This allows you to revert changes if needed.</p>
+            </div>
+        </section>
+
+        <!-- Templates Overview Section -->
+        <section id="templates-overview" class="section">
+            <h2 class="section-title">📄 Templates Overview</h2>
+            
+            <div class="template-grid">
+                <div class="template-card">
+                    <div class="template-preview">📄</div>
+                    <div class="template-info">
+                        <div class="template-name">Classic Corporate</div>
+                        <div class="template-description">Professional floating header design with traditional elegance and subtle 3D depth effects.</div>
+                        <ul class="template-features">
+                            <li>Floating header with gradient background</li>
+                            <li>Professional typography combination</li>
+                            <li>Subtle 3D shadows and embossed text</li>
+                            <li>Traditional business layout</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-preview">✨</div>
+                    <div class="template-info">
+                        <div class="template-name">Modern Minimalist</div>
+                        <div class="template-description">Clean side panel layout with contemporary 3D elements emphasizing clarity.</div>
+                        <ul class="template-features">
+                            <li>Sidebar contact information</li>
+                            <li>Asymmetric layout design</li>
+                            <li>Floating 3D elements</li>
+                            <li>Modern color gradients</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-preview">🏗️</div>
+                    <div class="template-info">
+                        <div class="template-name">Bold Construction</div>
+                        <div class="template-description">Industry-specific design with geometric 3D elements and construction-themed styling.</div>
+                        <ul class="template-features">
+                            <li>Geometric pattern backgrounds</li>
+                            <li>Industrial color scheme</li>
+                            <li>Dynamic 3D animations</li>
+                            <li>Construction industry focus</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-preview">💎</div>
+                    <div class="template-info">
+                        <div class="template-name">Elegant Professional</div>
+                        <div class="template-description">Sophisticated embossed effects with luxury styling for premium communications.</div>
+                        <ul class="template-features">
+                            <li>Luxury embossed text effects</li>
+                            <li>Ornamental design elements</li>
+                            <li>Premium color combinations</li>
+                            <li>Sophisticated typography</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-preview">🎨</div>
+                    <div class="template-info">
+                        <div class="template-name">Contemporary Asymmetric</div>
+                        <div class="template-description">Dynamic asymmetric 3D layout with modern visual flow and innovative design.</div>
+                        <ul class="template-features">
+                            <li>Asymmetric grid layout</li>
+                            <li>Dynamic 3D transformations</li>
+                            <li>Contemporary visual flow</li>
+                            <li>Innovative design patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <div class="template-preview">🏢</div>
+                    <div class="template-info">
+                        <div class="template-name">Company Profile</div>
+                        <div class="template-description">Comprehensive multi-page company profile with consistent branding and detailed sections.</div>
+                        <ul class="template-features">
+                            <li>Multi-page document structure</li>
+                            <li>Complete company information</li>
+                            <li>Director and management details</li>
+                            <li>B-BBEE certification display</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customizing Content Section -->
+        <section id="customizing-content" class="section">
+            <h2 class="section-title">✏️ Customizing Content</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🏢</span>
+                    Company Information
+                </h3>
+                <p>Replace the General Material Ckraftmanship details with your company information:</p>
+                
+                <div class="code-block" data-lang="HTML">
+&lt;h1 class="company-name"&gt;YOUR COMPANY NAME&lt;/h1&gt;
+&lt;p class="company-subtitle"&gt;(PTY) LTD&lt;/p&gt;
+&lt;p class="registration-number"&gt;Registration No: YOUR-REG-NUMBER&lt;/p&gt;</div>
+
+                <p><strong>Fields to customize:</strong></p>
+                <ul>
+                    <li>Company name and legal structure</li>
+                    <li>Registration number</li>
+                    <li>Contact information (address, phone, email, website)</li>
+                    <li>B-BBEE status and certification details</li>
+                    <li>Director and management information</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📬</span>
+                    Letter Content Areas
+                </h3>
+                <p>Each template includes placeholder content that should be replaced:</p>
+                
+                <div class="code-block" data-lang="HTML">
+&lt;div class="recipient-section"&gt;
+    &lt;p class="recipient-line"&gt;[Recipient Name]&lt;/p&gt;
+    &lt;p class="recipient-line"&gt;[Recipient Title]&lt;/p&gt;
+    &lt;p class="recipient-line"&gt;[Company Name]&lt;/p&gt;
+    &lt;!-- Replace with actual recipient information --&gt;
+&lt;/div&gt;</div>
+
+                <p><strong>Content areas to update:</strong></p>
+                <ul>
+                    <li>Date field: Replace [Date] with actual date</li>
+                    <li>Recipient information: Name, title, company, address</li>
+                    <li>Subject line: Replace [Letter Subject] with actual subject</li>
+                    <li>Letter body: Replace placeholder paragraphs with your content</li>
+                    <li>Signatory information: Name, title, company</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 Content Tips</div>
+                <p>Keep line lengths reasonable for readability. The templates are optimized for A4 paper size (210mm × 297mm). For longer letters, content will automatically flow to additional pages.</p>
+            </div>
+        </section>
+
+        <!-- Colors & Branding Section -->
+        <section id="colors-branding" class="section">
+            <h2 class="section-title">🎨 Colors & Branding</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🌈</span>
+                    Color Palette System
+                </h3>
+                <p>The templates use CSS custom properties (variables) for easy color customization:</p>
+                
+                <div class="code-block" data-lang="CSS">
+:root {
+    --primary-orange: #ff6b35;
+    --primary-blue: #2e86ab;
+    --primary-gray: #424874;
+    --accent-yellow: #f9ca24;
+    --accent-green: #6c5ce7;
+    --neutral-dark: #2d3436;
+    --neutral-light: #ddd;
+    --white: #ffffff;
+}</div>
+
+                <div class="color-palette">
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #ff6b35;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary Orange</div>
+                            <div class="color-value">#ff6b35</div>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #2e86ab;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary Blue</div>
+                            <div class="color-value">#2e86ab</div>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #424874;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary Gray</div>
+                            <div class="color-value">#424874</div>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #f9ca24;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accent Yellow</div>
+                            <div class="color-value">#f9ca24</div>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #6c5ce7;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accent Green</div>
+                            <div class="color-value">#6c5ce7</div>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-swatch" style="background: #2d3436;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Neutral Dark</div>
+                            <div class="color-value">#2d3436</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🎭</span>
+                    Customizing Brand Colors
+                </h3>
+                <p>To change colors throughout all templates, modify the CSS variables in <code>assets/css/shared.css</code>:</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Example: Change to corporate red and blue theme */
+:root {
+    --primary-orange: #dc3545;  /* Corporate red */
+    --primary-blue: #0056b3;    /* Corporate blue */
+    --accent-yellow: #ffc107;   /* Corporate yellow */
+    /* Adjust other colors as needed */
+}</div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Important</div>
+                    <p>When changing colors, ensure sufficient contrast for readability. Test both screen and print versions to verify legibility.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🖼️</span>
+                    Logo Customization
+                </h3>
+                <p>Replace the construction emoji (🏗️) with your company logo:</p>
+                
+                <div class="code-block" data-lang="HTML">
+&lt;!-- Current emoji logo --&gt;
+&lt;div class="company-logo"&gt;🏗️&lt;/div&gt;
+
+&lt;!-- Replace with image logo --&gt;
+&lt;div class="company-logo"&gt;
+    &lt;img src="path/to/your-logo.png" alt="Your Company Logo"&gt;
+&lt;/div&gt;</div>
+
+                <p><strong>Logo requirements:</strong></p>
+                <ul>
+                    <li>Recommended size: 80px × 80px minimum</li>
+                    <li>Format: PNG with transparent background preferred</li>
+                    <li>High resolution for print quality (300 DPI)</li>
+                    <li>Square or circular designs work best</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Fonts & Typography Section -->
+        <section id="fonts-typography" class="section">
+            <h2 class="section-title">📝 Fonts & Typography</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📚</span>
+                    Font Stack
+                </h3>
+                <p>The templates use Google Fonts for professional typography:</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Primary fonts used */
+font-family: 'Inter', sans-serif;           /* Body text */
+font-family: 'Playfair Display', serif;     /* Headings */
+font-family: 'Roboto', monospace;           /* Code/Numbers */</div>
+
+                <p><strong>Font usage:</strong></p>
+                <ul>
+                    <li><strong>Inter:</strong> Clean, modern sans-serif for body text and general content</li>
+                    <li><strong>Playfair Display:</strong> Elegant serif for company names and headings</li>
+                    <li><strong>Roboto:</strong> Monospace for registration numbers and technical information</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🔤</span>
+                    Changing Fonts
+                </h3>
+                <p>To use different fonts, update the Google Fonts import and CSS:</p>
+                
+                <div class="code-block" data-lang="HTML">
+&lt;!-- In HTML head section --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=YourFont:wght@300;400;600;700&display=swap" rel="stylesheet"&gt;</div>
+
+                <div class="code-block" data-lang="CSS">
+/* In CSS file */
+body {
+    font-family: 'Your Font', sans-serif;
+}
+
+.company-title {
+    font-family: 'Your Heading Font', serif;
+}</div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Font Selection Tips</div>
+                    <p>Choose professional fonts that maintain readability at different sizes. Sans-serif fonts generally work better for digital viewing, while serif fonts can enhance printed materials.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📏</span>
+                    Typography Scale
+                </h3>
+                <p>The templates use a consistent typography scale:</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Typography scale */
+h1 { font-size: 2.5rem; }      /* Main titles */
+h2 { font-size: 2.0rem; }      /* Section headers */
+h3 { font-size: 1.5rem; }      /* Subsection headers */
+p  { font-size: 1.0rem; }      /* Body text */
+small { font-size: 0.85rem; }  /* Fine print */</div>
+            </div>
+        </section>
+
+        <!-- 3D Effects Section -->
+        <section id="3d-effects" class="section">
+            <h2 class="section-title">🌟 3D Effects & Animations</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🎪</span>
+                    Understanding 3D Effects
+                </h3>
+                <p>The templates include various 3D effects powered by CSS transforms and animations:</p>
+                
+                <ul>
+                    <li><strong>Text Shadows:</strong> Create depth for typography</li>
+                    <li><strong>Box Shadows:</strong> Elevate elements above the page</li>
+                    <li><strong>Transforms:</strong> Rotate and translate elements in 3D space</li>
+                    <li><strong>Animations:</strong> Subtle movements and transitions</li>
+                    <li><strong>Gradients:</strong> Add depth and dimension to backgrounds</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">⚙️</span>
+                    Customizing 3D Effects
+                </h3>
+                <p>Modify 3D effect intensity by adjusting CSS properties:</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Adjust shadow depth */
+.text-3d {
+    text-shadow: 
+        2px 2px 4px rgba(0,0,0,0.3),     /* Closer shadow */
+        4px 4px 8px rgba(0,0,0,0.2),     /* Medium shadow */
+        6px 6px 12px rgba(0,0,0,0.1);    /* Distant shadow */
+}
+
+/* Modify element elevation */
+.card:hover {
+    transform: translateY(-10px) translateZ(20px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}</div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📱</span>
+                    Responsive 3D Effects
+                </h3>
+                <p>The templates automatically reduce 3D effects on mobile devices for better performance:</p>
+                
+                <div class="code-block" data-lang="CSS">
+@media (max-width: 768px) {
+    .text-3d {
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    .container-3d {
+        transform: none !important;
+    }
+}</div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Performance Tip</div>
+                    <p>3D effects can impact performance on older devices. The templates include automatic optimizations, but you can further reduce effects if needed.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🚫</span>
+                    Disabling 3D Effects
+                </h3>
+                <p>To completely disable 3D effects (for simpler designs or better performance):</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Add this CSS to disable all 3D effects */
+* {
+    transform: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+}</div>
+            </div>
+        </section>
+
+        <!-- Print Optimization Section -->
+        <section id="print-optimization" class="section">
+            <h2 class="section-title">🖨️ Print Optimization</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📄</span>
+                    Print Styles
+                </h3>
+                <p>The templates include specialized print styles that automatically activate when printing:</p>
+                
+                <div class="code-block" data-lang="CSS">
+@media print {
+    /* Remove animations for print */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* Ensure colors print correctly */
+    .bbee-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    /* Optimize page breaks */
+    .section {
+        page-break-inside: avoid;
+    }
+}</div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📐</span>
+                    Page Setup
+                </h3>
+                <p>For best print results, configure your browser's print settings:</p>
+                
+                <ol class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Paper Size</div>
+                        <p>Set to A4 (210mm × 297mm) for international standard or Letter (8.5" × 11") for US standard.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Margins</div>
+                        <p>Use minimum margins (usually 0.5" or 12.7mm) for maximum content area.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Background Graphics</div>
+                        <p>Enable "Print background graphics" to include colors and gradients.</p>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Scale</div>
+                        <p>Set scale to 100% to maintain proper proportions and sizing.</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🎨</span>
+                    Color Printing
+                </h3>
+                <p>To ensure colors print correctly:</p>
+                
+                <div class="code-block" data-lang="CSS">
+/* Force color printing for important elements */
+.company-logo,
+.bbee-badge,
+.section-decoration {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+}</div>
+
+                <div class="warning-box">
+                    <div class="warning-title">⚠️ Printer Compatibility</div>
+                    <p>Some older printers may not support color-adjust properties. Test print on your specific printer to ensure colors appear as expected.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section id="troubleshooting" class="section">
+            <h2 class="section-title">🔧 Troubleshooting</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">🐛</span>
+                    Common Issues
+                </h3>
+                
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-title">Fonts Not Loading</div>
+                        <p><strong>Solution:</strong> Ensure internet connection for Google Fonts, or download fonts locally and update CSS imports.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-title">3D Effects Not Working</div>
+                        <p><strong>Solution:</strong> Update your browser to the latest version. 3D effects require modern CSS support.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-title">Print Colors Missing</div>
+                        <p><strong>Solution:</strong> Enable "Print background graphics" in browser print settings and check printer color settings.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-title">Mobile Display Issues</div>
+                        <p><strong>Solution:</strong> The templates are responsive. Ensure viewport meta tag is present in HTML head section.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-title">Assets Not Loading</div>
+                        <p><strong>Solution:</strong> Check file paths and ensure all assets are in the correct folders relative to HTML files.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">💻</span>
+                    Browser Compatibility
+                </h3>
+                <p>The templates are tested and optimized for:</p>
+                
+                <ul>
+                    <li><strong>Chrome:</strong> Version 80+ (Recommended)</li>
+                    <li><strong>Firefox:</strong> Version 75+</li>
+                    <li><strong>Safari:</strong> Version 13+</li>
+                    <li><strong>Edge:</strong> Version 80+</li>
+                </ul>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Best Performance</div>
+                    <p>For the best experience with 3D effects and animations, use Chrome or Firefox on a desktop computer. Mobile browsers may show simplified effects for better performance.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">
+                    <span class="icon">📞</span>
+                    Getting Help
+                </h3>
+                <p>If you encounter issues not covered in this guide:</p>
+                
+                <ul>
+                    <li>Check browser console for error messages (F12 → Console)</li>
+                    <li>Verify all file paths and folder structure</li>
+                    <li>Test in different browsers to isolate compatibility issues</li>
+                    <li>Ensure you have a stable internet connection for external resources</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <h2 class="download-title">🎉 Ready to Get Started?</h2>
+            <p class="download-description">
+                You now have everything you need to customize your premium letterhead templates. 
+                Start with the template that best fits your business style and make it uniquely yours.
+            </p>
+            <div class="download-buttons">
+                <a href="letterhead-classic.html" class="download-btn">
+                    <span>📄</span>
+                    Classic Template
+                </a>
+                <a href="letterhead-minimalist.html" class="download-btn">
+                    <span>✨</span>
+                    Minimalist Template
+                </a>
+                <a href="letterhead-bold.html" class="download-btn">
+                    <span>🏗️</span>
+                    Bold Template
+                </a>
+                <a href="letterhead-elegant.html" class="download-btn">
+                    <span>💎</span>
+                    Elegant Template
+                </a>
+                <a href="letterhead-contemporary.html" class="download-btn">
+                    <span>🎨</span>
+                    Contemporary Template
+                </a>
+                <a href="company-profile.html" class="download-btn">
+                    <span>🏢</span>
+                    Company Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/letterhead-effects.js"></script>
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation to sections when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
+        });
+
+        // Code block copy functionality
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Visual feedback
+                    const original = this.style.background;
+                    this.style.background = '#e8f5e8';
+                    setTimeout(() => {
+                        this.style.background = original;
+                    }, 500);
+                });
+            });
+            
+            // Add click instruction
+            block.title = 'Click to copy code';
+            block.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>
